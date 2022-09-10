@@ -10,6 +10,16 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+  .module{
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 2px;
+    border-style: solid;
+    border-color: #fff;
+  }
 
 </style>

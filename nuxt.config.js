@@ -8,6 +8,11 @@ export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'Agora',
+    script:[
+    {hid: 'Ipfs', src: 'https://cdn.jsdelivr.net/npm/ipfs/dist/index.min.js', defer: true},
+    {hid: 'Libcrypto', src: 'https://cdn.jsdelivr.net/npm/libp2p-crypto@0.21.2/dist/index.min.js', defer: true},
+    {hid: 'ethers', src: 'https://cdn.jsdelivr.net/npm/ethers@5.7.0/dist/ethers.umd.min.js', defer: true},
+  ],
     htmlAttrs: {
       lang: 'en'
     },
@@ -18,7 +23,7 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      {rel: 'stylesheet', href: "https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap"},
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
 
