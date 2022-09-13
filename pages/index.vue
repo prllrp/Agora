@@ -6,7 +6,7 @@
     <div class="main">
       <Explorer :rooms = 'rooms' />
       <Chat @send-message = 'sendMessage' :messages = 'messages' />
-      <Info :chatPeers = 'this.chatPeers' :channel = 'this.channel' ></Info>
+      <Info :chatPeers = 'this.chatPeers' :channel = 'this.channel' :nodePeers="this.peers" :nodeStatus='this.nodeStatus' :nodeId="this.me"></Info>
     </div>
   </div>
 </template>
@@ -22,7 +22,7 @@ export default {
     components: { Explorer, Chat, Info, Banner },
     data(){
       return {
-        defaultChannel:{
+      defaultChannel:{
         id: 99999,
         name: 'Agora',
         description: 'General chat',
@@ -31,7 +31,11 @@ export default {
       rooms: [],
       alias: 'Anonymous',
       chatPeers : [],
-      channel: {},  
+      channel: {}, 
+      peers: [],
+      peerCount: 0,
+      nodeStatus: 'Offline',
+      me: '',
     }
     },
     methods: {
@@ -48,7 +52,7 @@ export default {
             await this.node.stop();
             this.node = await this.createNode();
             console.log(this.node);
-            this.setChannel("global");
+            this.setChannel(this.channel);
             setInterval(this.checkAlive, 60000);
           }
           // sometimes we appear to be connected to the bootstrap nodes, but we're not, so let's try to reconnect
@@ -59,7 +63,7 @@ export default {
   async processAnnounce(announce) {
       // process the recieved address
       const addr = new TextDecoder().decode(announce.data);
-      
+      this.status  = 'Connecting...'
       if (announce.from == this.me.string) {
         console.log('Received my own announce, ignoring');
         return;
@@ -139,10 +143,10 @@ export default {
       this.id = await node.id();
       this.node = node;
       const status = node.isOnline() ? "online" : "offline";
+      this.status = status;
       console.log(`Node status: ${status}, id: ${this.id.id}`);
       this.me = this.id.id;
       console.log(this.me);
-      console.log(node.swarm.peers());
       //subscribe and publish to announce circuit
       await node.pubsub.subscribe("announce-circuit", this.processAnnounce);
       console.log("subscribed to announce-circuit");
@@ -160,11 +164,12 @@ export default {
             new TextEncoder().encode("peer-alive")
           );
       }, 1000);
-      setInterval(function () {
+      setInterval(async function () {
         node.pubsub.publish(
           "announce-circuit",
           new TextEncoder().encode("keep-alive")
         );
+        this.peers = await node.swarm.peers();
       }, 2000);
       
       await this.setChannel(this.defaultChannel);
@@ -225,7 +230,7 @@ export default {
         const signedMessage = await this.signMessage(message);
         if(signedMessage){
           const data = JSON.stringify(signedMessage);
-          await this.node.pubsub.publish(this.channel.id, new TextEncoder().encode(data));
+          await this.node.pubsub.publish(this.channel.name, new TextEncoder().encode(data));
         }
       }
       catch(err){
