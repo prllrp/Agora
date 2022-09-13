@@ -1,13 +1,63 @@
 <template>
   <div class="module">
     <h1>Info</h1>
+    <div class="chat-info">
+      <div class="chat-info__item">
+        <div class="chat-info-channel">Current Chat</div>
+        <div class="chat-info-channel">{{ channel.name }}</div>
+      </div>
+      <div class="chat-info__item">
+        <div class="chat-info-description">Chat Description</div>
+        <div class="chat-info-description">{{ channel.description }}</div>
+      </div>
+      <div class="chat-info-peers">
+        <div class="chat-info-peers">Chat Peers</div>
+        <div class="chat-info-peers" v-bind:key = "peer" v-for="peer in chatPeers" >{{ peers }}</div>
+      </div>
+    </div>
+    <div class="node-info">
+      <!-- Display the info from the ipfs node -->
+      <div class="node-info__item">
+        <div class="node-info-id">Node ID</div>
+        <div class="node-info-id">{{ node.id }}</div>
+    </div>
+    <div class="node-info__item">
+      <div class="node-info-status">Node Status</div>
+      <div class="node-info-status">{{ node.status }}</div>
+  </div>
+  <div class="node-info__item">
+    <div class="node-info-peers">Node Peers</div>
+    <div class="node-info-peers">{{ node.peerCount }}</div>
+    <div class="node-info-peers"  v-bind:key = 'peer' v-for="peer in nodePeers">{{peer}}</div>
+  </div>
+  </div>
   </div>
 </template>
 
 <script>
 export default {
-
+  props:{
+    channel: {
+      type: Object,
+      required: true,
+    },
+    chatPeers: {
+      type: Array,
+      required: true,
+    },
+    nodePeers:{
+      type: Array,
+      required: true,
+      default: [],
+    },
+    node: {
+      type: Object,
+      required: true,
+      default: {},
+    },
+  }
 }
+
 </script>
 
 <style scoped>

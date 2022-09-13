@@ -6,7 +6,7 @@
     <div class="main">
       <Explorer :rooms = 'rooms' />
       <Chat @send-message = 'sendMessage' :messages = 'messages' />
-      <Info></Info>
+      <Info :chatPeers = 'this.chatPeers' :channel = 'this.channel' ></Info>
     </div>
   </div>
 </template>
@@ -30,7 +30,9 @@ export default {
       messages: [],
       rooms: [],
       alias: 'Anonymous',
-      }
+      chatPeers : [],
+      channel: {},  
+    }
     },
     methods: {
       async checkAlive() {
@@ -244,8 +246,6 @@ export default {
       console.log("Channel set to " + channel.name);
       await this.node.pubsub.subscribe(channel.name, this.recieveMessage);
       this.channelJoined = true;
-      
-      
     },
     async createRoom(data){
       data.id = Math.floor(Math.random() * 10000);
