@@ -19,16 +19,16 @@
       <!-- Display the info from the ipfs node -->
       <div class="node-info__item">
         <div class="node-info-id">Node ID</div>
-        <div class="node-info-id">{{ node.id }}</div>
+        <div class="node-info-id">{{ nodeId }}</div>
     </div>
     <div class="node-info__item">
       <div class="node-info-status">Node Status</div>
-      <div class="node-info-status">{{ node.status }}</div>
+      <div class="node-info-status">{{ nodeStatus }}</div>
   </div>
-  <div class="node-info__item">
+  <div class="node-info__item"> 
     <div class="node-info-peers">Node Peers</div>
-    <div class="node-info-peers">{{ node.peerCount }}</div>
-    <div class="node-info-peers"  v-bind:key = 'peer' v-for="peer in nodePeers">{{peer}}</div>
+    <div class="node-info-peers">{{ nodePeers.length }}</div>
+    <div class="node-info-peers"  v-bind:key = 'peer' v-for="peer in nodePeers">{{peer.peer}}</div>
   </div>
   </div>
   </div>
@@ -50,10 +50,13 @@ export default {
       required: true,
       default: [],
     },
-    node: {
-      type: Object,
+    nodeStatus:{
+      type: String,
       required: true,
-      default: {},
+      default: 'Offline',
+    },
+    nodeId: {
+      required: true,
     },
   }
 }
