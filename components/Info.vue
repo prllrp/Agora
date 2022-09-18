@@ -10,10 +10,11 @@
         <div class="chat-info-description">Chat Description</div>
         <div class="chat-info-description">{{ channel.description }}</div>
       </div>
-      <div class="chat-info-peers">
-        <div class="chat-info-peers">Chat Peers</div>
-        <div class="chat-info-peers" v-bind:key = "peer" v-for="peer in chatPeers" >{{ peers }}</div>
-      </div>
+    </div>
+    <div class="alias">
+      <div class="current-alias">Current Alias : {{alias}}</div>
+      <input type="text" v-model='newAlias' class="new-alias">
+      <button class="change-alias"  @click = 'changeAlias'>Change Alias</button>
     </div>
     <div class="node-info">
       <!-- Display the info from the ipfs node -->
@@ -28,7 +29,7 @@
   <div class="node-info__item"> 
     <div class="node-info-peers">Node Peers</div>
     <div class="node-info-peers">{{ nodePeers.length }}</div>
-    <div class="node-info-peers"  v-bind:key = 'peer' v-for="peer in nodePeers">{{peer.peer}}</div>
+    <div class="node-info-peers"  v-bind:key = 'peer.peer.id' v-for="peer in nodePeers">{{peer.peer}}</div>
   </div>
   </div>
   </div>
@@ -39,10 +40,6 @@ export default {
   props:{
     channel: {
       type: Object,
-      required: true,
-    },
-    chatPeers: {
-      type: Array,
       required: true,
     },
     nodePeers:{
@@ -58,6 +55,22 @@ export default {
     nodeId: {
       required: true,
     },
+    alias: {
+      type: String,
+      required: true,
+    }
+  },
+  data(){
+    return {
+      newAlias: '',
+    }
+  },
+  methods:{
+    changeAlias(){
+      this.$emit('change-alias', {
+        alias: this.newAlias,
+      })
+    }
   }
 }
 

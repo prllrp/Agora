@@ -4,9 +4,10 @@
       <Banner />
     </div>
     <div class="main">
-      <Explorer :rooms = 'rooms' />
+      <Explorer :rooms = 'rooms' @add-room = 'createRoom' @join-room = 'setChannel' />
       <Chat @send-message = 'sendMessage' :messages = 'messages' />
-      <Info :chatPeers = 'this.chatPeers' :channel = 'this.channel' :nodePeers="this.peers" :nodeStatus='this.nodeStatus' :nodeId="this.me"></Info>
+      <Info :channel = 'this.channel' :nodePeers="this.peers" :nodeStatus='this.nodeStatus' :nodeId="this.me" :alias = 'alias'
+      @change-alias = 'setAlias'></Info>
     </div>
   </div>
 </template>
@@ -30,8 +31,10 @@ export default {
       messages: [],
       rooms: [],
       alias: 'Anonymous',
-      chatPeers : [],
-      channel: {}, 
+      channel: {
+        id: 99999,
+        name: 'Agora',
+        description: 'General chat'}, 
       peers: [],
       peerCount: 0,
       nodeStatus: 'Offline',
@@ -39,7 +42,11 @@ export default {
     }
     },
     methods: {
+      setAlias(alias){
+        this.alias = alias.alias;
+      },
       async checkAlive() {
+        this.peers = await this.node.swarm.peers()
         let now = new Date().getTime();
         if (now - this.lastAlive >= 35000) {
           //TODO restart the  node if it is not connected to the network
@@ -53,7 +60,7 @@ export default {
             this.node = await this.createNode();
             console.log(this.node);
             this.setChannel(this.channel);
-            setInterval(this.checkAlive, 60000);
+            setInterval(this.checkAlive, 20000);
           }
           // sometimes we appear to be connected to the bootstrap nodes, but we're not, so let's try to reconnect
         } else {
@@ -107,12 +114,18 @@ export default {
       console.log(msg)
       const data = JSON.parse(new TextDecoder().decode(msg.data));
       for(let i = 0; i < this.rooms.length; i++){
-        if(this.rooms[i].id == data.id){
+        if(!data.id){
+          return;
+        }
+        if(this.rooms[i].id === data.id){
+          console.log('Already in rooms')
           return
+        }else{
+          this.rooms.push(data);
         }
       }
       await this.node.pubsub.publish('agora.rooms', new TextEncoder().encode(JSON.stringify(this.channel)))
-      this.rooms.push(data);
+      
     },
     async createNode() {
       //create a node to be passed into the chat component
@@ -170,14 +183,18 @@ export default {
           new TextEncoder().encode("keep-alive")
         );
         this.peers = await node.swarm.peers();
-      }, 2000);
+      }, 2000)
       
-      await this.setChannel(this.defaultChannel);
-      this.rooms.push(this.defaultChannel);
+      //await this.setChannel(this.defaultChannel);
+      this.rooms.push(this.channel);
+
+      
       
       //listen for new rooms and announce our current room
-      await this.node.pubsub.publish('agora.rooms', new TextEncoder().encode(JSON.stringify(this.channel)))
+      
       await node.pubsub.subscribe('agora.rooms', this.processRooms);
+      await node.pubsub.publish('agora.rooms', new TextEncoder().encode(JSON.stringify(this.channel)))
+      
       return node;
     },
     async signMessage(message){
@@ -249,6 +266,7 @@ export default {
       this.messages = [];
       this.channel = channel;
       console.log("Channel set to " + channel.name);
+      await this.node.pubsub.publish('agora.rooms', new TextEncoder().encode(JSON.stringify(this.channel)))
       await this.node.pubsub.subscribe(channel.name, this.recieveMessage);
       this.channelJoined = true;
     },
@@ -256,16 +274,15 @@ export default {
       data.id = Math.floor(Math.random() * 10000);
       this.channel = data;
       await this.setChannel(data);
-    }
     },
+  },
     async created() {
         const body = document.querySelector('body');
         body.style.margin = '0px';
         await this.createNode();
         console.log('node created');
     }
-    }
-    
+  }
 </script>
 
 <style>
