@@ -14,7 +14,9 @@
       </div>
     </div>
     <!-- Button to add a new room with a  name  and description -->
+    
     <div class="add-room">
+      <h1 class="add-room-title">Add Room</h1>
       <div class="add-room__item">
         <div class="add-room__item-name">Name</div>
         <input class="add-room__item-input" v-model="newRoomName" />

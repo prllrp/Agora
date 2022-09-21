@@ -5,7 +5,7 @@
     </div>
     <div class="main">
       <Explorer :rooms = 'rooms' @add-room = 'createRoom' @join-room = 'setChannel' />
-      <Chat @send-message = 'sendMessage' :messages = 'messages' />
+      <Chat @send-message = 'sendMessage' :messages = 'messages' @block = 'blockUser' />
       <Info :channel = 'this.channel' :nodePeers="this.peers" :nodeStatus='this.nodeStatus' :nodeId="this.me" :alias = 'alias'
       @change-alias = 'setAlias'></Info>
     </div>
@@ -39,9 +39,14 @@ export default {
       peerCount: 0,
       nodeStatus: 'Offline',
       me: '',
+      blockList: [],
     }
     },
     methods: {
+      blockUser(address){
+        this.blockList.push(address);
+        console.log(this.blockList)
+      },
       setAlias(alias){
         this.alias = alias.alias;
       },
@@ -70,7 +75,10 @@ export default {
   async processAnnounce(announce) {
       // process the recieved address
       const addr = new TextDecoder().decode(announce.data);
-      this.status  = 'Connecting...'
+      if(this.nodeStatus !== 'Connected'){
+        this.nodeStatus  = 'Connecting...'
+      }
+      
       if (announce.from == this.me.string) {
         console.log('Received my own announce, ignoring');
         return;
@@ -109,6 +117,8 @@ export default {
         console.log(err);
         await this.node.swarm.connect(announce.from);
       }
+
+      this.nodeStatus = 'Connected'
     },
     async processRooms(msg){
       console.log(msg)
@@ -185,7 +195,7 @@ export default {
         this.peers = await node.swarm.peers();
       }, 2000)
       
-      //await this.setChannel(this.defaultChannel);
+      this.setChannel(this.channel)
       this.rooms.push(this.channel);
 
       
@@ -257,6 +267,11 @@ export default {
     async recieveMessage(msg){
       const data = JSON.parse(new TextDecoder().decode(msg.data));
       if(this.verifyMessage(data)){
+        for(let i = 0; i < this.blockList.length; i++){
+          if(this.blockList[i] === data.address){
+            return;
+          }
+        }
         this.messages.push(data);
       }else{
         return
@@ -311,7 +326,7 @@ export default {
   display: flex;
   height: 13vh;
   flex-direction: row;
-  width: auto;
+  width: 100%;
   z-index: 1;
   background-color: black;
   color: white;
