@@ -15,10 +15,9 @@
             </div>
           </div>
             <div class="chat-body-alias-address">
-              {{message.address}}
+              {{message.address}} <p class="block" @click = "$emit('block', message.address)">Block</p>
+              
             </div>
-            
-          
           <div class="chat-body-message-text">
             >>{{ message.message }}
           </div>
@@ -27,7 +26,7 @@
       </div>
       <div class="chat-footer">
         <div class="chat-footer-input">
-          <input v-model="message"  type="text" placeholder="Type here ..." />
+          <textarea v-model = 'message' name="chatbox" id="chatbox" cols="30" rows="10" class="input" placeholder="Type here..." v-on:keyup.enter = 'sendMessage'></textarea>
         </div>
         <div class="chat-footer-button" @click="sendMessage">
           <button>Send</button>
@@ -54,6 +53,9 @@ export default {
       //emit an event to the parent
       this.$emit('send-message', this.message);
       this.message = ''
+    },
+    async blockUser(){
+      this.$emit('block', );
     }
   }
 }
@@ -97,9 +99,10 @@ export default {
 
   .chat-footer-input{
     height: 100%;
-    width: auto;
+    width: 100%;
     background-color: #000;
     border: none;
+    
     
   }
 
@@ -113,7 +116,7 @@ export default {
     border-top: 2px solid white;
   }
 
-  .chat-footer-input input{
+  .chat-footer-input textarea{
     height: 15vh;
     width: 32vw;
     background-color: #000;
@@ -124,6 +127,8 @@ export default {
     align-self: flex-start;
     justify-self: flex-start;
     font-family: 'Courier New', Courier, monospace;
+    writing-mode: vertical-lr;
+    resize: none;
   }
 
   .module{
