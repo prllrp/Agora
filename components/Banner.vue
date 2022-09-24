@@ -7,9 +7,9 @@
             <img src="../static/Metamask-icon.svg" alt="Metamask Logo">
         </div>
         <div class="links">
-            <h2 class="chat">Chat</h2>
-            <h2 class="how">How it works</h2>
-            <h2 class="about">About</h2>
+            <NuxtLink to="/" class="chat">Chat</NuxtLink>
+            <NuxtLink to='/' class="how">How it works</NuxtLink>
+            <NuxtLink to='/about' class="about">About</NuxtLink>
         </div>
 
     </div>
@@ -36,6 +36,8 @@ export default {
         justify-content: space-between;
         align-items: center;
         width: auto;
+        margin: 5px;
+        padding: 5px;
     }
 
     .logos{
@@ -65,6 +67,14 @@ export default {
         color: white;
         margin-left: 5%;
         width: auto;
+    }
+
+    NuxtLink{
+        font-size: 1.5rem;
+        color: #fff;
+        font-weight: 400;
+        margin: 0 1rem;
+        padding: 5px;
     }
     
 </style>
