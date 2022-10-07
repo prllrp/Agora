@@ -1,8 +1,11 @@
 <template>
     <div class="module">
         <div class="title-div">
-            <h1 class = "title">AGORA CHAT</h1>
-            <img src="../static/logo_200x200.png" alt="Agora Logo">
+           
+                <h1 class = "title">AGORA CHAT</h1>
+                <img src="../static/logo_200x200.png" alt="Agora Logo">
+            
+            
         </div>
         
         <div class="logos">
@@ -12,7 +15,7 @@
         </div>
         <div class="links">
             <NuxtLink to="/" class="chat">Chat</NuxtLink>
-            <NuxtLink to='/' class="how">How it works</NuxtLink>
+            <NuxtLink to='/howit' class="how">How it works</NuxtLink>
             <NuxtLink to='/about' class="about">About</NuxtLink>
         </div>
 
@@ -37,6 +40,8 @@ export default {
    a{
         color: #fff;
         text-decoration: bold;
+        display: flex;
+        flex-direction: row;
     }
 
     .links{
@@ -85,6 +90,8 @@ export default {
         font-weight: 400;
         margin: 0 1rem;
         padding: 5px;
+        display: flex;
+        flex-direction: row;
     }
 
     .title-div{

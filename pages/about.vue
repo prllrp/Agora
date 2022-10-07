@@ -6,9 +6,6 @@
     <div class="main">
         <h1 class="title">About</h1>
         <img src="../static/debate.png" alt="Philosophers debating">
-        <h3>"socrates, marcus aurelius, epictetus and diogenes debating in athens, photorealistic, black and white"
-          -created by Midjourney AI
-        </h3>
         <!-- Redo the first line -->
 
         <p class="text">AgoraChat is an MVP for a decentralized chat room built by Patrick Lane. It tries to adresss three features that are fundamental for the free and open digital society that Web3 and Decentralized technologies promise, these features being that AgoraChat is Public, Pseudoanonymous, and Accountable.</p>
@@ -47,6 +44,7 @@ export default {
     width: auto;
     height: 100%;
     background-color: black;
+    
 }
 .module .main{
     display: flex;
@@ -57,6 +55,7 @@ export default {
     width: 50%;
     margin: 5px;
     padding: 5px;
+    
 }
 
 body {

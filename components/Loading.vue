@@ -2,8 +2,6 @@
     
     
     <div class="main">
-        <h1> AGORA CHAT</h1>
-    <img src="../static/logo_200x200.png" alt="Agora Chat Logo">
     <img src="../static/agora.png" alt="Philosophers in an Agora">
     <h3>4 ancient greek philosophers debating in a digital agora, 2D, black and white, minimalist -created by Midjourney AI</h3>
     <h2>Loading Chat ... Please Wait</h2>
