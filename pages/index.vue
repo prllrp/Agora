@@ -3,11 +3,15 @@
     <div class="banner">
       <Banner />
     </div>
-    <div class="main">
+
+    <div class="main" v-if="this.nodeReady === true">
       <Explorer :rooms = 'rooms' @add-room = 'createRoom' @join-room = 'setChannel' />
       <Chat @send-message = 'sendMessage' :messages = 'messages' @block = 'blockUser' :nodeId = 'this.id.toString()' />
       <Info :channel = 'this.channel' :nodePeers="this.peers" :nodeStatus='this.nodeStatus' :nodeId="this.me" :alias = 'alias'
       @change-alias = 'setAlias'></Info>
+    </div>
+    <div class="loading" v-else>
+      <Loading />
     </div>
   </div>
 </template>
@@ -18,9 +22,10 @@ import Chat from '~/components/Chat.vue';
 import Info from '~/components/Info.vue';
 import Banner from '../components/Banner.vue';
 import { onMounted } from 'vue';
+import Loading from '../components/Loading.vue';
 export default {
     name: "IndexPage",
-    components: { Explorer, Chat, Info, Banner },
+    components: { Explorer, Chat, Info, Banner, Loading },
     data(){
       return {
       defaultChannel:{
@@ -41,6 +46,7 @@ export default {
       nodeStatus: 'Offline',
       me: '',
       blockList: [],
+      nodeReady: false,
     }
     },
     methods: {
@@ -303,6 +309,7 @@ export default {
         body.style.margin = '0px';
         await this.createNode();
         console.log('node created');
+        this.nodeReady = true;
     }
   }
 </script>
