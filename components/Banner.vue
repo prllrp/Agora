@@ -1,6 +1,10 @@
 <template>
     <div class="module">
-        <h1 class = "title">AGORA CHAT</h1>
+        <div class="title-div">
+            <h1 class = "title">AGORA CHAT</h1>
+            <img src="../static/logo_200x200.png" alt="Agora Logo">
+        </div>
+        
         <div class="logos">
             <h2 class="logos">Built  with: </h2>
             <img src="../static/ipfs-logo.0ac81a5a.svg" alt="IPFS Logo">
@@ -30,14 +34,20 @@ export default {
         width: 100%;
     }
 
+   a{
+        color: #fff;
+        text-decoration: bold;
+    }
+
     .links{
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        width: auto;
+        width: 20vw;
         margin: 5px;
         padding: 5px;
+        text-decoration: none;
     }
 
     .logos{
@@ -74,6 +84,16 @@ export default {
         color: #fff;
         font-weight: 400;
         margin: 0 1rem;
+        padding: 5px;
+    }
+
+    .title-div{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        width: 50%;
+        margin: 5px;
         padding: 5px;
     }
     

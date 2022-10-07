@@ -1,11 +1,8 @@
 <template>
   <div class="module">
-    <div class="chat">
-      <div class="chat-header">
-        <div class="chat-header-title">
+    
+      
           <h1>Chat</h1>
-        </div>
-      </div>
       <div class="chat-body" >
         <div v-for="message in messages" v-bind:key="message.messageId" class="chat-body-message">
           <div class="chat-body-alias">
@@ -15,8 +12,7 @@
             </div>
           </div>
             <div class="chat-body-alias-address">
-              {{message.address}} <p class="block" @click = "$emit('block', message.address)">Block</p>
-              
+             <p>{{message.address}}</p>  <button v-if = "message.from !== nodeId" class="block" @click = "$emit('block', message.address)">Block</button>
             </div>
           <div class="chat-body-message-text">
             >>{{ message.message }}
@@ -33,7 +29,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -47,6 +42,7 @@ export default {
     messages: Array,
     rooms: Array,
     defaultChannel: Object,
+    nodeId : String,
   },
   methods:{
     async sendMessage(){
@@ -68,7 +64,11 @@ export default {
     width: 100%;
     background-color: #000;
     overflow: auto;
-    border-bottom:2px white solid; ;
+    border-bottom:2px white solid; 
+  }
+
+  .chat-body-message{
+    border-bottom: 2px solid;
   }
 
   .chat-body-alias{
@@ -79,6 +79,9 @@ export default {
   .chat-body-alias-address{
     font-size: 0.5rem;
     color: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 
   .chat-body-message-time{
@@ -89,7 +92,7 @@ export default {
   }
 
   .chat-footer{
-    height: 15vh;
+    height: auto;
     width: 100%;
     background-color: #000;
     display: flex;
@@ -118,7 +121,7 @@ export default {
 
   .chat-footer-input textarea{
     height: 15vh;
-    width: 32vw;
+    width: 96%;
     background-color: #000;
     color: #fff;
     border: none;
@@ -131,15 +134,20 @@ export default {
     resize: none;
   }
 
+  .block{
+    padding-right: 5px;
+    margin-right: 5px;
+  }
+
   .module{
     height: auto;
-    width: 100%;
+    width: 33vw;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     border: 2px;
     border-style: solid;
     border-color: #fff;
-  }
+}
 
 </style>

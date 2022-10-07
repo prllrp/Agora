@@ -5,7 +5,7 @@
     </div>
     <div class="main">
       <Explorer :rooms = 'rooms' @add-room = 'createRoom' @join-room = 'setChannel' />
-      <Chat @send-message = 'sendMessage' :messages = 'messages' @block = 'blockUser' />
+      <Chat @send-message = 'sendMessage' :messages = 'messages' @block = 'blockUser' :nodeId = 'this.id.toString()' />
       <Info :channel = 'this.channel' :nodePeers="this.peers" :nodeStatus='this.nodeStatus' :nodeId="this.me" :alias = 'alias'
       @change-alias = 'setAlias'></Info>
     </div>
@@ -28,6 +28,7 @@ export default {
         name: 'Agora',
         description: 'General chat',
       },
+      id: '',
       messages: [],
       rooms: [],
       alias: 'Anonymous',
@@ -44,10 +45,12 @@ export default {
     },
     methods: {
       blockUser(address){
+        confirm('Are you sure you want to block this user? \n' + address);
         this.blockList.push(address);
         console.log(this.blockList)
       },
       setAlias(alias){
+        confirm('Are you sure you want to change your alias? \n' + alias.alias);
         this.alias = alias.alias;
       },
       async checkAlive() {
@@ -134,7 +137,7 @@ export default {
           this.rooms.push(data);
         }
       }
-      await this.node.pubsub.publish('agora.rooms', new TextEncoder().encode(JSON.stringify(this.channel)))
+      //await this.node.pubsub.publish('agora.rooms', new TextEncoder().encode(JSON.stringify(this.channel)))
       
     },
     async createNode() {
@@ -278,6 +281,10 @@ export default {
       }
     },
     async setChannel(channel) {
+      if(channel.name !== this.channel.name){
+        confirm("Are you sure you want to change channels? \n You will lose all messages in this channel")
+      }
+      await this.node.pubsub.unsubscribe(this.channel.name, this.recieveMessage);
       this.messages = [];
       this.channel = channel;
       console.log("Channel set to " + channel.name);
@@ -340,10 +347,12 @@ body {
   width: 100vw;
 }
 html {
+  width: 100vw;
   margin: 0px;
   padding: 0;
   height: 100%;
   width: 100%;
   font-family: "Roboto Mono", monospace;
+  overflow: hidden;
 }
 </style>

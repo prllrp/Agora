@@ -2,17 +2,23 @@
   <div class="module">
     <h1>Explorer</h1>
     <!-- Display all of the rooms and their descriptions -->
-    <div v-for="room in rooms" v-bind:key="room.name" class="room">
+    <div class="rooms">
+      <div v-for="room in rooms" v-bind:key="room.name" class="room">
       <div class="room-name">
+        <h3>Room Name:</h3>
         {{ room.name }}
       </div>
       <div class="room-description">
+        
+        <h3>Room Description:  </h3>
         {{ room.description }}
       </div>
       <div class="join-room">
         <button class = 'join-room-btn' @click = 'joinRoom(room.name,room.description)'>Join Room</button>
       </div>
     </div>
+    </div>
+    
     <!-- Button to add a new room with a  name  and description -->
     
     <div class="add-room">
@@ -66,13 +72,54 @@ export default {
 <style  scoped>
 .module{
   height: auto;
-    width: 100%;
+    width: 33vw;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     border: 2px;
     border-style: solid;
     border-color: #fff;
+}
+
+.room{
+    height: auto;
+    width: 33vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px;
+    border-style: solid;
+    border-color: #fff;
+    margin: 5px;
+    
+}
+
+.add-room{
+  align-self: flex-start;
+}
+
+.rooms{
+  overflow-x:  hidden;
+  overflow-y: auto;
+}
+
+.room-name{
+  overflow: hidden;
+  padding: 5px;
+  margin: 5px;
+}
+
+.room-description{
+  overflow: hidden;
+  overflow-x:  hidden;
+  overflow-y: auto;
+}
+
+.join-room-btn{
+  
+  padding: 0.5rem;
+  margin: 0.5rem;
 }
 
 </style>
