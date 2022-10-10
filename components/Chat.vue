@@ -121,7 +121,7 @@ export default {
 
   .chat-footer-input textarea{
     height: 15vh;
-    width: 96%;
+    width: 94%;
     background-color: #000;
     color: #fff;
     border: none;

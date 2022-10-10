@@ -320,7 +320,7 @@ export default {
   padding: 0;
   display: flex;
   flex-direction: row;
-  height: 87vh;
+  height: 100%;
   width: auto;
   z-index: 1;
   background-color: black;
@@ -350,16 +350,16 @@ export default {
 body {
   margin: 0px;
   padding: 0;
-  height: 100vh;
+  height: 100%;
   width: 100vw;
 }
 html {
   width: 100vw;
   margin: 0px;
   padding: 0;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
   font-family: "Roboto Mono", monospace;
   overflow: hidden;
+  background-color: black;
 }
 </style>

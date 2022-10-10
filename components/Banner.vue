@@ -50,8 +50,8 @@ export default {
         justify-content: space-between;
         align-items: center;
         width: 20vw;
-        margin: 5px;
-        padding: 5px;
+        margin: 10px;
+        padding: 20px;
         text-decoration: none;
     }
 
