@@ -150,6 +150,7 @@ export default {
       //create a node to be passed into the chat component
       const node = await Ipfs.create({
         repo: "ipfs-" + Math.random(),
+        
         relay: {
           enabled: true,
           hop: {

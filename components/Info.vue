@@ -92,7 +92,7 @@ export default {
   .chat-info{
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: flex-start;
     width: auto;
   }
 
@@ -102,7 +102,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: start;
+    align-items: flex-start;
     border: 2px;
     border-style: solid;
     border-color: #fff;
