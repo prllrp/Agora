@@ -162,12 +162,12 @@ export default {
             //Replace with final node id for prodcution
             //https://github.com/libp2p/js-libp2p-webrtc-star/blob/master/packages/webrtc-star-signalling-server/DEPLOYMENT.md
             Swarm: [
-              "/dns4/agorachat.xyz/tcp/443/wss/p2p-webrtc-star",
-              "/dns4/agorachat.xyz/tcp/443/wss/p2p-webrtc-star",
-              "/dns4/agorachat.xyz/tcp/9090/wss/p2p-webrtc-star",
-              "/dns6/agorachat.xyz/tcp/9090/wss/p2p-webrtc-star",
-              "/dns6/agorachat.xyz/tcp/4430/wss/p2p/12D3KooWAGa2hvWZFXiCUjLFgNi4rD75gGLsPdSTxH2HnmUWuKin",
-              "/dns4/agorachat.xyz/tcp/4430/wss/p2p/12D3KooWAGa2hvWZFXiCUjLFgNi4rD75gGLsPdSTxH2HnmUWuKin",
+              "/dns4/app.agorachat.xyz/tcp/443/wss/p2p-webrtc-star",
+              "/dns4/app.agorachat.xyz/tcp/443/wss/p2p-webrtc-star",
+              "/dns4/app.agorachat.xyz/tcp/9090/wss/p2p-webrtc-star",
+              "/dns6/app.agorachat.xyz/tcp/9090/wss/p2p-webrtc-star",
+              "/dns6/app.agorachat.xyz/tcp/4430/wss/p2p/12D3KooWAGa2hvWZFXiCUjLFgNi4rD75gGLsPdSTxH2HnmUWuKin",
+              "/dns4/app.agorachat.xyz/tcp/4430/wss/p2p/12D3KooWAGa2hvWZFXiCUjLFgNi4rD75gGLsPdSTxH2HnmUWuKin",
             ],
           },
         },

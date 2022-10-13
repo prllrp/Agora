@@ -1,0 +1,3 @@
+agorachat IPNS key k51qzi5uqu5dl77lxeufzhfnri9zady5evmt2ql808u6xkkxorgbw7rbtim9pj
+ipfs@localhost:~$ ipfs name publish QmQCpFvDX8tJwmhWWXGyfmmDumc7G4CsqCd6Pq45pW5CxB
+Published to k51qzi5uqu5dlqbp9i6m5v5oucjzoufqsbwiqcjplhxf8g11ng3ehazg654bol: /ipfs/QmQCpFvDX8tJwmhWWXGyfmmDumc7G4CsqCd6Pq45pW5CxB
